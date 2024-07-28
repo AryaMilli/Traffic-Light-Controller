@@ -67,17 +67,25 @@ else
            else
            n_state=s0;
          s1: begin
-             repeat(`Y2Rdelay)@(posedge clock);
+          // repeat(`Y2Rdelay)@(posedge clock); non synthesizable delay
+          if(counter==4) begin
              n_state=s2;
+             counter<=0;
              end 
+             else counter<=counter+1;
+          end
          s2: if(X)
              n_state=s2;
              else 
              n_state=s3;
          s3: begin
-             repeat(`Y2Rdelay)@(posedge clock);
+          // repeat(`Y2Rdelay)@(posedge clock); non synthesizable delay
+          if(counter==4) begin
              n_state=s0;
+             counter<=0;
              end 
+             else counter<=counter+1;
+           end 
          default: n_state=s0;
     endcase
 end 
